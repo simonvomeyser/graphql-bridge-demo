@@ -7,10 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production node build/index.js",
     "dev": "NODE_ENV=development yarn nodemon-script",
-    "nodemon-script":
-      "nodemon src/index.js --exec babel-node --presets=es2015 --plugins transform-object-rest-spread",
-    "build":
-      "babel src -d build --presets=es2015 --plugins transform-object-rest-spread,transform-runtime"
+    "nodemon-script": "nodemon src/index.js --exec babel-node --presets=es2015 --plugins transform-object-rest-spread",
+    "build": "babel src -d build --presets=es2015 --plugins transform-object-rest-spread,transform-runtime"
   },
   "author": "Simon vom Eyser <simon.vom.eyser@gmail.com>",
   "license": "ISC",
@@ -25,6 +23,7 @@
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
     "graphql": "^0.11.7",
+    "graphql-bridge": "^0.1.5",
     "nodemon": "^1.12.1"
   }
 }
