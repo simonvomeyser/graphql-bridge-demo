@@ -11,6 +11,6 @@ export default class GraphQLTwitterRestBridge extends GraphQlRestBridge {
         screen_name: name,
       },
     });
-    return { name: result.name, tweets: result.friends_count };
+    return result;
   }
 }
