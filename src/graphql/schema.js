@@ -14,8 +14,23 @@ const TwitterUserType = new GraphQLObjectType({
     name: {
       type: GraphQLString,
     },
-    tweets: {
+    friends_count: {
       type: GraphQLInt,
+    },
+  },
+});
+
+const TwitterIntegrationType = new GraphQLObjectType({
+  name: 'TwitterIntegration',
+  fields: {
+    user: {
+      type: TwitterUserType,
+      resolve(parentValue, args, request) {
+        return new GraphQLTwitterRestBridge().getUser(request.args.name);
+      },
+    },
+    tweets: {
+      type: GraphQLString,
     },
   },
 });
@@ -25,11 +40,14 @@ const UserType = new GraphQLObjectType({
   fields: {
     name: {
       type: GraphQLString,
+      resolve(parentValue, args) {
+        return 'static';
+      },
     },
     twitterIntegration: {
-      type: TwitterUserType,
-      resolve(parentValue) {
-        return new GraphQLTwitterRestBridge().getUser(parentValue.name);
+      type: TwitterIntegrationType,
+      resolve() {
+        return {};
       },
     },
   },
@@ -42,8 +60,10 @@ const schema = new GraphQLSchema({
       User: {
         type: UserType,
         args: { name: { type: new GraphQLNonNull(GraphQLString) } },
-        resolve(parentValue, args) {
-          return { name: args.name };
+        resolve(parentValue, args, request) {
+          // Pass the name argument down
+          request.args = args;
+          return {};
         },
       },
     },
