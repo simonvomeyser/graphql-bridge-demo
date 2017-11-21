@@ -1,9 +1,24 @@
+import GraphQLTwitterRestBridge from '../graphql-bridges/twitter/GraphQLTwitterRestBridge';
+
 import {
   GraphQLString,
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLNonNull,
+  GraphQLInt,
 } from 'graphql';
+
+const TwitterUserType = new GraphQLObjectType({
+  name: 'TwitterUser',
+  fields: {
+    name: {
+      type: GraphQLString,
+    },
+    tweets: {
+      type: GraphQLInt,
+    },
+  },
+});
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -12,10 +27,9 @@ const UserType = new GraphQLObjectType({
       type: GraphQLString,
     },
     twitterIntegration: {
-      type: GraphQLString,
-      resolve() {
-        // @todo return Twitter Integration here
-        return '';
+      type: TwitterUserType,
+      resolve(parentValue) {
+        return new GraphQLTwitterRestBridge().getUser(parentValue.name);
       },
     },
   },
