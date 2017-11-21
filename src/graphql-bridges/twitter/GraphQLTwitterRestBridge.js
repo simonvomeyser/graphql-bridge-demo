@@ -2,9 +2,15 @@ import { GraphQlRestBridge } from '../../../graphql-bridge'; // @todo change to 
 
 export default class GraphQLTwitterRestBridge extends GraphQlRestBridge {
   constructor() {
-    super();
+    super({}, { Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}` });
   }
-  getUser(name) {
-    return { name, tweets: 17 };
+  async getUser(name) {
+    const result = await super.request({
+      endpoint: 'https://api.twitter.com/1.1/users/show.json',
+      data: {
+        screen_name: name,
+      },
+    });
+    return { name: result.name, tweets: result.friends_count };
   }
 }
