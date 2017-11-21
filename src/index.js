@@ -2,6 +2,8 @@ import graphqlHTTP from 'express-graphql';
 import express from 'express';
 import schema from './graphql/schema';
 
+require('dotenv').config();
+
 const app = express();
 
 app.use(

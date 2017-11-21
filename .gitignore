@@ -1,3 +1,5 @@
 # Do not track this, because it is developed in another repo
 # Should be removed later and added as npm dependency
 graphql-bridge/
+
+.env
