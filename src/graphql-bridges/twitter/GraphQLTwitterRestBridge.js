@@ -1,4 +1,4 @@
-import { GraphQlRestBridge } from 'graphql-bridge';
+import { GraphQlRestBridge } from '../../../graphql-bridge'; // @todo change to npm package later
 
 export default class GraphQLTwitterRestBridge extends GraphQlRestBridge {
   constructor() {
