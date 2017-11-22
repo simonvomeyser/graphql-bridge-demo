@@ -1,6 +1,9 @@
-import userResourceSnapshot from './userResourceSnapshot';
+import twitterUserResourceSnapshot from './twitterUserResourceSnapshot';
 import composeWithJson from 'graphql-compose-json';
 
-const TwitterUserTC = composeWithJson('TwitterUser', userResourceSnapshot);
+const TwitterUserTC = composeWithJson(
+  'TwitterUser',
+  twitterUserResourceSnapshot
+);
 
 export default TwitterUserTC.getType();
