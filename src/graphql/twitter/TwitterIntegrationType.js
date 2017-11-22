@@ -22,6 +22,13 @@ const TwitterIntegrationType = new GraphQLObjectType({
         return TwitterIntegration.getTweets(request.args.name, args.count);
       },
     },
+    friends: {
+      type: new GraphQLList(TwitterUserType),
+      args: { count: { type: GraphQLInt } },
+      resolve(parentValue, args, request) {
+        return TwitterIntegration.getFriends(request.args.name, args.count);
+      },
+    },
   },
 });
 

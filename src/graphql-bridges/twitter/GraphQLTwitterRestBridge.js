@@ -24,4 +24,15 @@ export default class GraphQLTwitterRestBridge extends GraphQlRestBridge {
     });
     return result;
   }
+  async getFriends(name, count) {
+    const result = await super.request({
+      endpoint: 'https://api.twitter.com/1.1/friends/list.json',
+      data: {
+        screen_name: name,
+        count,
+      },
+      nester: data => data.users,
+    });
+    return result;
+  }
 }
