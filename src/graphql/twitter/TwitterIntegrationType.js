@@ -1,4 +1,4 @@
-import { GraphQLString, GraphQLObjectType, GraphQLList } from 'graphql';
+import { GraphQLInt, GraphQLObjectType, GraphQLList } from 'graphql';
 
 import TwitterUserType from './TwitterUserType';
 import TwitterTweetType from './TwitterTweetType';
@@ -17,8 +17,9 @@ const TwitterIntegrationType = new GraphQLObjectType({
     },
     tweets: {
       type: new GraphQLList(TwitterTweetType),
+      args: { count: { type: GraphQLInt } },
       resolve(parentValue, args, request) {
-        return [];
+        return TwitterIntegration.getTweets(request.args.name, args.count);
       },
     },
   },

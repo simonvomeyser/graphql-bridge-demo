@@ -14,4 +14,14 @@ export default class GraphQLTwitterRestBridge extends GraphQlRestBridge {
     });
     return result;
   }
+  async getTweets(name, count) {
+    const result = await super.request({
+      endpoint: 'https://api.twitter.com/1.1/statuses/user_timeline.json',
+      data: {
+        screen_name: name,
+        count,
+      },
+    });
+    return result;
+  }
 }
