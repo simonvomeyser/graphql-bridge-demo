@@ -1,6 +1,7 @@
-import { GraphQLString, GraphQLObjectType } from 'graphql';
+import { GraphQLString, GraphQLObjectType, GraphQLList } from 'graphql';
 
 import TwitterUserType from './TwitterUserType';
+import TwitterTweetType from './TwitterTweetType';
 import GraphQLTwitterRestBridge from '../../graphql-bridges/twitter/GraphQLTwitterRestBridge';
 
 const TwitterIntegrationType = new GraphQLObjectType({
@@ -13,7 +14,10 @@ const TwitterIntegrationType = new GraphQLObjectType({
       },
     },
     tweets: {
-      type: GraphQLString,
+      type: new GraphQLList(TwitterTweetType),
+      resolve(parentValue, args, request) {
+        return [];
+      },
     },
   },
 });
