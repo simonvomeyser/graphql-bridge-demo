@@ -1,10 +1,4 @@
-import {
-  GraphQLString,
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLInt,
-} from 'graphql';
+import { GraphQLString, GraphQLObjectType, GraphQLInt } from 'graphql';
 
 const TwitterUserType = new GraphQLObjectType({
   name: 'TwitterUser',

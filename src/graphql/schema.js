@@ -3,7 +3,6 @@ import {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLNonNull,
-  GraphQLInt,
 } from 'graphql';
 
 import TwitterIntegrationType from './twitter/TwitterIntegrationType';

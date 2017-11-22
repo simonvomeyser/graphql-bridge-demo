@@ -1,10 +1,4 @@
-import {
-  GraphQLString,
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLInt,
-} from 'graphql';
+import { GraphQLString, GraphQLObjectType } from 'graphql';
 
 import TwitterUserType from './TwitterUserType';
 import GraphQLTwitterRestBridge from '../../graphql-bridges/twitter/GraphQLTwitterRestBridge';
