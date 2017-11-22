@@ -1,15 +1,6 @@
-import { GraphQLString, GraphQLObjectType, GraphQLInt } from 'graphql';
+import userResourceSnapshot from './userResourceSnapshot';
+import composeWithJson from 'graphql-compose-json';
 
-const TwitterUserType = new GraphQLObjectType({
-  name: 'TwitterUser',
-  fields: {
-    name: {
-      type: GraphQLString,
-    },
-    friends_count: {
-      type: GraphQLInt,
-    },
-  },
-});
+const TwitterUserTC = composeWithJson('TwitterUser', userResourceSnapshot);
 
-export default TwitterUserType;
+export default TwitterUserTC.getType();
