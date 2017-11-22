@@ -5,23 +5,15 @@ import {
   GraphQLNonNull,
 } from 'graphql';
 
-import TwitterIntegrationType from './twitter/TwitterIntegrationType';
+import TwitterUserType from './twitter/TwitterUserType';
 
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: {
     name: {
       type: GraphQLString,
-      resolve(parentValue, args, request) {
-        return request.args.name;
-      },
     },
-    twitterIntegration: {
-      type: TwitterIntegrationType,
-      resolve() {
-        return {};
-      },
-    },
+    twitterUser: TwitterUserType,
   },
 });
 
@@ -34,8 +26,7 @@ const schema = new GraphQLSchema({
         args: { name: { type: new GraphQLNonNull(GraphQLString) } },
         resolve(parentValue, args, request) {
           // Pass the name argument down
-          request.args = args;
-          return {};
+          return { name: args.name };
         },
       },
     },
