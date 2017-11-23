@@ -1,14 +1,17 @@
 import { GraphQLInt, GraphQLObjectType, GraphQLList } from 'graphql';
-
-import composeWithJson from 'graphql-compose-json';
-import GraphQLTwitterRestBridge from '../../graphql-bridges/twitter/GraphQLTwitterRestBridge';
-import TwitterTweetType from './TwitterTweetType';
-
-import twitterUserResourceSnapshot from './twitterUserResourceSnapshot';
 import Resolver from 'graphql-compose/lib/resolver';
+import composeWithJson from 'graphql-compose-json';
 
+import GraphQLTwitterRestBridge from '../../graphql-bridges/twitter/GraphQLTwitterRestBridge';
+import GraphQLGeoCodingRestBridge from '../../graphql-bridges/google/GraphQLGeoCodingRestBridge';
+
+import TwitterTweetType from './TwitterTweetType';
+import { GoogleGeoCodeTC } from '../google/GoogleGeoCodeType';
 import { GitHubUserTC } from '../github/GitHubUserType';
 
+import twitterUserResourceSnapshot from './twitterUserResourceSnapshot';
+
+const GoogleGeoCodeIntegration = new GraphQLGeoCodingRestBridge();
 const TwitterIntegration = new GraphQLTwitterRestBridge();
 const TwitterUserTC = composeWithJson(
   'TwitterUser',
@@ -28,6 +31,12 @@ TwitterUserTC.addFields({
     args: { count: { type: GraphQLInt } },
     resolve(parentValue, args, request) {
       return TwitterIntegration.getFriends(parentValue.screen_name, args.count);
+    },
+  },
+  geoCodedLocation: {
+    type: GoogleGeoCodeTC.getType(),
+    resolve(parentValue) {
+      return GoogleGeoCodeIntegration.reverseGeocode(parentValue.location);
     },
   },
 });
