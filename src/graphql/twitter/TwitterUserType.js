@@ -29,6 +29,7 @@ TwitterUserTC.addFields({
   },
 });
 
+exports.TwitterUserTC = TwitterUserTC;
 export default {
   type: TwitterUserTC.getType(),
   resolve(parentValue, args, request) {
