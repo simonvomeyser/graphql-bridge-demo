@@ -2,11 +2,8 @@ import gitHubUserSnapshot from './gitHubUserResourceSnapshot';
 import composeWithJson from 'graphql-compose-json';
 import GraphQLGitHubBridge from '../../graphql-bridges/github/GraphQLGitHubBridge';
 import { TwitterUserTC } from '../twitter/TwitterUserType';
-import GraphQLTwitterRestBridge from '../../graphql-bridges/twitter/GraphQLTwitterRestBridge';
 import Resolver from 'graphql-compose/lib/resolver';
-import { GraphQLOutputType } from 'graphql';
 
-const TwitterIntegration = new GraphQLTwitterRestBridge();
 const GitHubIntegration = new GraphQLGitHubBridge();
 
 const GitHubUserTC = composeWithJson('GitHubUser', gitHubUserSnapshot);
