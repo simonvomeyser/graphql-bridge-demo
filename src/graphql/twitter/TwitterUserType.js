@@ -5,6 +5,9 @@ import GraphQLTwitterRestBridge from '../../graphql-bridges/twitter/GraphQLTwitt
 import TwitterTweetType from './TwitterTweetType';
 
 import twitterUserResourceSnapshot from './twitterUserResourceSnapshot';
+import Resolver from 'graphql-compose/lib/resolver';
+
+import { GitHubUserTC } from '../github/GitHubUserType';
 
 const TwitterIntegration = new GraphQLTwitterRestBridge();
 const TwitterUserTC = composeWithJson(
@@ -29,9 +32,26 @@ TwitterUserTC.addFields({
   },
 });
 
+TwitterUserTC.addResolver(
+  new Resolver({
+    name: 'getFromGitHub',
+    type: TwitterUserTC,
+    resolve: ({ source, args, context, info }) => {
+      return TwitterIntegration.getUser(source.login);
+    },
+  })
+);
+
+TwitterUserTC.addRelation('GitHubUser', {
+  resolver: () => GitHubUserTC.getResolver('getFromTwitter'),
+});
+
 exports.TwitterUserTC = TwitterUserTC;
 export default {
   type: TwitterUserTC.getType(),
+  fields: () => {
+    TwitterUserTC.getFields();
+  },
   resolve(parentValue, args, request) {
     return TwitterIntegration.getUser(parentValue.name);
   },
