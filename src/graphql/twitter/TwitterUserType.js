@@ -6,7 +6,7 @@ import GraphQLTwitterRestBridge from '../../graphql-bridges/twitter/GraphQLTwitt
 import GraphQLGeoCodingRestBridge from '../../graphql-bridges/google/GraphQLGeoCodingRestBridge';
 
 import TwitterTweetType from './TwitterTweetType';
-import { GoogleGeoCodeTC } from '../google/GoogleGeoCodeType';
+import GoogleGeoCodeType from '../google/GoogleGeoCodeType';
 import { GitHubUserTC } from '../github/GitHubUserType';
 
 import twitterUserResourceSnapshot from './twitterUserResourceSnapshot';
@@ -34,8 +34,9 @@ TwitterUserTC.addFields({
     },
   },
   geoCodedLocation: {
-    type: GoogleGeoCodeTC.getType(),
+    type: GoogleGeoCodeType,
     resolve(parentValue) {
+      console.log('hallo');
       return GoogleGeoCodeIntegration.reverseGeocode(parentValue.location);
     },
   },

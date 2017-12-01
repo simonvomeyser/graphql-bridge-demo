@@ -1,10 +1,16 @@
-import googleGeoCodingResourceSnapshot from './googleGeoCodingResourceSnapshot';
-import composeWithJson from 'graphql-compose-json';
+import { GraphQLFloat, GraphQLString, GraphQLObjectType } from 'graphql';
 
-const GoogleGeoCodeTC = composeWithJson(
-  'GoogleGeoCode',
-  googleGeoCodingResourceSnapshot
-);
-
-exports.GoogleGeoCodeTC = GoogleGeoCodeTC;
-export default GoogleGeoCodeTC.getType();
+export default new GraphQLObjectType({
+  name: 'GoogleGeoCode',
+  fields: () => ({
+    addressName: {
+      type: GraphQLString,
+    },
+    lat: {
+      type: GraphQLFloat,
+    },
+    lng: {
+      type: GraphQLFloat,
+    },
+  }),
+});

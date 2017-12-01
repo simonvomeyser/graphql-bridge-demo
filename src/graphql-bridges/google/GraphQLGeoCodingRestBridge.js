@@ -1,9 +1,10 @@
 import { GraphQlRestBridge } from '../../../graphql-bridge'; // @todo change to npm package later
+import geoCodingMapper from './geoCodingMapper';
 require('dotenv').config();
 
 export default class GraphQLGeoCodingRestBridge extends GraphQlRestBridge {
   constructor() {
-    super(process.env.GOOGLE_GEOCODING_KEY);
+    super({ key: process.env.GOOGLE_GEOCODING_KEY });
   }
   async reverseGeocode(address) {
     const result = await super.request({
@@ -12,6 +13,7 @@ export default class GraphQLGeoCodingRestBridge extends GraphQlRestBridge {
         address,
       },
       nester: data => data.results[0],
+      mapper: geoCodingMapper,
     });
     return result;
   }
