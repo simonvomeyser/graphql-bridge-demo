@@ -10,7 +10,6 @@ import {
 import { createApolloFetch } from 'apollo-fetch';
 
 import localSchema from './graphql/schema';
-
 require('dotenv').config();
 
 async function run() {
@@ -32,24 +31,42 @@ async function run() {
 
   const app = express();
 
-  const weatherSchema = await createRemoteSchema(
+  const gitHubSchema = await createRemoteSchema(
     'https://api.github.com/graphql'
   );
 
   const linkSchemaDefs = `
     extend type RootUser {
-        stichedGitHubUser: User
+      GitHubUser: User
+    }
+    extend type TwitterUser {
+      GitHubUser: User
     }
   `;
 
   const schema = mergeSchemas({
-    schemas: [localSchema, weatherSchema, linkSchemaDefs],
+    schemas: [localSchema, gitHubSchema, linkSchemaDefs],
     resolvers: mergeInfo => ({
       RootUser: {
-        stichedGitHubUser: {
+        GitHubUser: {
           fragment: 'fragment RootUserFragment on RootUser {name}',
           resolve(parent, args, context, info) {
             const login = parent.name;
+            return mergeInfo.delegate(
+              'query',
+              'user',
+              { login },
+              context,
+              info
+            );
+          },
+        },
+      },
+      TwitterUser: {
+        GitHubUser: {
+          fragment: 'fragment TwitterUserFragment on TwitterUser {screen_name}',
+          resolve(parent, args, context, info) {
+            const login = parent.screen_name;
             return mergeInfo.delegate(
               'query',
               'user',

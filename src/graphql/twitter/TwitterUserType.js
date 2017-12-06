@@ -1,5 +1,4 @@
 import { GraphQLInt, GraphQLObjectType, GraphQLList } from 'graphql';
-import Resolver from 'graphql-compose/lib/resolver';
 import composeWithJson from 'graphql-compose-json';
 
 import GraphQLTwitterRestBridge from '../../graphql-bridges/twitter/GraphQLTwitterRestBridge';
@@ -7,7 +6,6 @@ import GraphQLGeoCodingRestBridge from '../../graphql-bridges/google/GraphQLGeoC
 
 import TwitterTweetType from './TwitterTweetType';
 import GoogleGeoCodeType from '../google/GoogleGeoCodeType';
-import { GitHubUserTC } from '../github/GitHubUserType';
 
 import twitterUserResourceSnapshot from './twitterUserResourceSnapshot';
 
@@ -39,20 +37,6 @@ TwitterUserTC.addFields({
       return GoogleGeoCodeIntegration.reverseGeocode(parentValue.location);
     },
   },
-});
-
-TwitterUserTC.addResolver(
-  new Resolver({
-    name: 'getFromGitHub',
-    type: TwitterUserTC,
-    resolve: ({ source, args, context, info }) => {
-      return TwitterIntegration.getUser(source.login);
-    },
-  })
-);
-
-TwitterUserTC.addRelation('GitHubUser', {
-  resolver: () => GitHubUserTC.getResolver('getFromTwitter'),
 });
 
 exports.TwitterUserTC = TwitterUserTC;
