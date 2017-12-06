@@ -7,11 +7,13 @@ import { mergeSchemas } from 'graphql-tools';
 import localSchema from './graphql-schema-local/schema';
 import gitHubSchemaPromise from './graphql-schema-github/getGitHubSchema';
 
+// Run the app inside of async function, so remote github schema can be fetched
 async function run() {
   const app = express();
 
   const gitHubSchema = await gitHubSchemaPromise();
 
+  // Link types from the remote schema with types of the local schema
   const linkSchemaDefs = `
     extend type RootUser {
       GitHubUser: User
@@ -21,8 +23,11 @@ async function run() {
     }
   `;
 
+  // Do the actual merging
   const schema = mergeSchemas({
     schemas: [localSchema, gitHubSchema, linkSchemaDefs],
+
+    // Add resolvers to the linked part of the merged schema
     resolvers: mergeInfo => ({
       RootUser: {
         GitHubUser: {
@@ -57,21 +62,25 @@ async function run() {
     }),
   });
 
+  // Provide graphl endpoint
   app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
+  // Provide graphiql tool
   app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
+  // For all other routes, just show message
   app.get('*', (req, res) => {
     res.send('Visit /graphql to use this app');
   });
 
+  // Start the app
   const port = process.env.PORT || 4000;
-
   app.listen(port, () => {
     console.log(`App listening on port ${port}!`);
   });
 }
 
+// Actually run the app and catch errors
 try {
   run();
 } catch (e) {
