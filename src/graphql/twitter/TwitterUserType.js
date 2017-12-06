@@ -36,7 +36,6 @@ TwitterUserTC.addFields({
   geoCodedLocation: {
     type: GoogleGeoCodeType,
     resolve(parentValue) {
-      console.log('hallo');
       return GoogleGeoCodeIntegration.reverseGeocode(parentValue.location);
     },
   },
