@@ -7,6 +7,8 @@ import {
 
 import TwitterUserType from './twitter/TwitterUserType';
 
+// A local user which will have connections to twitterUser
+// The connection to githubUser is added later
 const UserType = new GraphQLObjectType({
   name: 'RootUser',
   fields: {
@@ -17,6 +19,7 @@ const UserType = new GraphQLObjectType({
   },
 });
 
+// The basic entrypoint
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'RootQueryType',
@@ -24,8 +27,7 @@ const schema = new GraphQLSchema({
       User: {
         type: UserType,
         args: { name: { type: new GraphQLNonNull(GraphQLString) } },
-        resolve(parentValue, args, request) {
-          // Pass the name argument down
+        resolve(parentValue, args) {
           return { name: args.name };
         },
       },

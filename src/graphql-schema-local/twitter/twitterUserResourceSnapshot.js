@@ -1,3 +1,8 @@
+/**
+ * This is the bluprint used for creating an twitter user
+ *
+ * This data could be fetched asynchronously, but is saved here for performance reasons
+ */
 export default {
   id: 753871008,
   id_str: '753871008',

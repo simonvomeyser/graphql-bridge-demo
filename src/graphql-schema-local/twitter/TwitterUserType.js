@@ -1,4 +1,4 @@
-import { GraphQLInt, GraphQLObjectType, GraphQLList } from 'graphql';
+import { GraphQLInt, GraphQLList } from 'graphql';
 import composeWithJson from 'graphql-compose-json';
 
 import GraphQLTwitterRestBridge from '../../graphql-bridges/twitter/GraphQLTwitterRestBridge';
@@ -11,11 +11,15 @@ import twitterUserResourceSnapshot from './twitterUserResourceSnapshot';
 
 const GoogleGeoCodeIntegration = new GraphQLGeoCodingRestBridge();
 const TwitterIntegration = new GraphQLTwitterRestBridge();
+
+// Create the basic type with the provided sample api data
 const TwitterUserTC = composeWithJson(
   'TwitterUser',
   twitterUserResourceSnapshot
 );
 
+// Add fields with syntax from 'graphql-compose' lib
+// Resovers use Integration Libs
 TwitterUserTC.addFields({
   tweets: {
     type: new GraphQLList(TwitterTweetType),
@@ -39,7 +43,7 @@ TwitterUserTC.addFields({
   },
 });
 
-exports.TwitterUserTC = TwitterUserTC;
+// Export a complete type so the usage in schema.js is simpler
 export default {
   type: TwitterUserTC.getType(),
   fields: () => {
