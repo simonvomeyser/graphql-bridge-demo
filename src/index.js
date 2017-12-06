@@ -1,39 +1,16 @@
 import * as bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import express from 'express';
+import { mergeSchemas } from 'graphql-tools';
 
-import {
-  makeRemoteExecutableSchema,
-  mergeSchemas,
-  introspectSchema,
-} from 'graphql-tools';
-import { createApolloFetch } from 'apollo-fetch';
-
-import localSchema from './graphql/schema';
-require('dotenv').config();
+// Get the two schemas, the second one needs to be resolved
+import localSchema from './graphql-schema-local/schema';
+import gitHubSchemaPromise from './graphql-schema-github/getGitHubSchema';
 
 async function run() {
-  const createRemoteSchema = async uri => {
-    const fetcher = createApolloFetch({ uri });
-    fetcher.use(({ request, options }, next) => {
-      if (!options.headers) {
-        options.headers = {}; // Create the headers object if needed.
-      }
-      options.headers['authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
-
-      next();
-    });
-    return makeRemoteExecutableSchema({
-      schema: await introspectSchema(fetcher),
-      fetcher,
-    });
-  };
-
   const app = express();
 
-  const gitHubSchema = await createRemoteSchema(
-    'https://api.github.com/graphql'
-  );
+  const gitHubSchema = await gitHubSchemaPromise();
 
   const linkSchemaDefs = `
     extend type RootUser {
