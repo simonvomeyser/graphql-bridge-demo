@@ -9,7 +9,7 @@ import TwitterUserType from './twitter/TwitterUserType';
 import GitHubUserType from './github/GitHubUserType';
 
 const UserType = new GraphQLObjectType({
-  name: 'User',
+  name: 'RootUser',
   fields: {
     name: {
       type: GraphQLString,

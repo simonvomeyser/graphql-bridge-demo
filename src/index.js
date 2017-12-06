@@ -9,12 +9,59 @@ import {
 } from 'graphql-tools';
 import { createApolloFetch } from 'apollo-fetch';
 
-import schema from './graphql/schema';
+import localSchema from './graphql/schema';
 
 require('dotenv').config();
 
 async function run() {
+  const createRemoteSchema = async uri => {
+    const fetcher = createApolloFetch({ uri });
+    fetcher.use(({ request, options }, next) => {
+      if (!options.headers) {
+        options.headers = {}; // Create the headers object if needed.
+      }
+      options.headers['authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
+
+      next();
+    });
+    return makeRemoteExecutableSchema({
+      schema: await introspectSchema(fetcher),
+      fetcher,
+    });
+  };
+
   const app = express();
+
+  const weatherSchema = await createRemoteSchema(
+    'https://api.github.com/graphql'
+  );
+
+  const linkSchemaDefs = `
+    extend type RootUser {
+        stichedGitHubUser: User
+    }
+  `;
+
+  const schema = mergeSchemas({
+    schemas: [localSchema, weatherSchema, linkSchemaDefs],
+    resolvers: mergeInfo => ({
+      RootUser: {
+        stichedGitHubUser: {
+          fragment: 'fragment RootUserFragment on RootUser {name}',
+          resolve(parent, args, context, info) {
+            const login = parent.name;
+            return mergeInfo.delegate(
+              'query',
+              'user',
+              { login },
+              context,
+              info
+            );
+          },
+        },
+      },
+    }),
+  });
 
   app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
