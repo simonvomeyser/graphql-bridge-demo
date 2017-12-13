@@ -82,7 +82,7 @@ async function run() {
 
   // For all other routes, just show message
   app.get('*', (req, res) => {
-    res.send('Visit /graphql to use this app');
+    res.redirect('/graphiql');
   });
 
   // Start the app
