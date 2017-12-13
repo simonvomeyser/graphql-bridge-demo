@@ -77,8 +77,36 @@ async function run() {
   // Provide graphl endpoint
   app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
-  // Provide graphiql tool
-  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+  // Provide graphiql tool with example query
+  app.use(
+    '/graphiql',
+    graphiqlExpress({
+      endpointURL: '/graphql',
+      query: `
+        query{
+          User(name:"simonvomeyser") {
+            twitterUser {
+              screen_name,
+              created_at
+              friends_count
+              friends(count:3) {
+                screen_name
+              }
+              GitHubUser {
+                name
+                createdAt
+                pinnedRepositories(first:3) {
+                  nodes {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+  `,
+    })
+  );
 
   // For all other routes, just show message
   app.get('*', (req, res) => {
