@@ -1,8 +1,11 @@
 {
   "name": "graphql-bridge-demo",
   "version": "0.1.0",
-  "description": "",
+  "description": "Demo of the library graphql-bridge",
   "main": "src/index.js",
+  "engines": {
+    "node": "8.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "npm run-script build",
