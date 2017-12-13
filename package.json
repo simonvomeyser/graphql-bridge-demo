@@ -5,10 +5,13 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "npm run-script build",
     "start": "NODE_ENV=production node build/index.js",
-    "dev": "NODE_ENV=development yarn nodemon-script",
-    "nodemon-script": "nodemon src/index.js --exec babel-node --presets=es2015 --plugins transform-object-rest-spread",
-    "build": "babel src -d build --presets=es2015 --plugins transform-object-rest-spread,transform-runtime"
+    "dev": "NODE_ENV=development npm run-script nodemon-script",
+    "nodemon-script":
+      "nodemon src/index.js --exec babel-node --presets=es2015 --plugins transform-object-rest-spread",
+    "build":
+      "babel src -d build --presets=es2015 --plugins transform-object-rest-spread,transform-runtime"
   },
   "author": "Simon vom Eyser <simon.vom.eyser@gmail.com>",
   "license": "ISC",
