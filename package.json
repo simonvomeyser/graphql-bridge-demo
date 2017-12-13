@@ -17,6 +17,9 @@
   "author": "Simon vom Eyser <simon.vom.eyser@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
     "apollo-fetch": "^0.7.0",
     "apollo-server-express": "^1.2.0",
     "babel": "^6.23.0",
@@ -32,13 +35,11 @@
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
     "graphql": "^0.11.7",
-    "graphql-bridge": "^0.1.9",
+    "graphql-bridge": "^0.1.11",
     "graphql-compose": "^2.10.1",
     "graphql-compose-json": "^1.0.2",
-    "graphql-tools": "^2.12.0",
-    "nodemon": "^1.12.1"
+    "graphql-tools": "^2.12.0"
   },
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/simonvomeyser/graphql-bridge-demo.git"
