@@ -33,8 +33,7 @@
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
     "graphql": "^0.11.7",
-    "graphql-bridge": "file:graphql-bridge",
-    "graphql-compose": "^2.9.6",
+    "graphql-bridge": "^0.1.9",
     "graphql-compose-json": "^1.0.2",
     "graphql-tools": "^2.12.0",
     "nodemon": "^1.12.1"
