@@ -83,27 +83,27 @@ async function run() {
     graphiqlExpress({
       endpointURL: '/graphql',
       query: `
-        query{
-          User(name:"simonvomeyser") {
-            twitterUser {
-              screen_name,
-              created_at
-              friends_count
-              friends(count:3) {
-                screen_name
-              }
-              GitHubUser {
-                name
-                createdAt
-                pinnedRepositories(first:3) {
-                  nodes {
-                    name
-                  }
-                }
-              }
-            }
+{
+  User(name: "simonvomeyser") {
+    twitterUser {
+      screen_name
+      created_at
+      friends_count
+      friends(count: 3) {
+        screen_name
+      }
+      GitHubUser {
+        name
+        createdAt
+        pinnedRepositories(first: 3) {
+          nodes {
+            name
           }
         }
+      }
+    }
+  }
+}
   `,
     })
   );
