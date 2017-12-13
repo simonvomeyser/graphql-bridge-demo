@@ -7,6 +7,18 @@ import { mergeSchemas } from 'graphql-tools';
 import localSchema from './graphql-schema-local/schema';
 import gitHubSchemaPromise from './graphql-schema-github/getGitHubSchema';
 
+// Throw errors if keys for apis do not exists
+require('dotenv').config();
+if (
+  !process.env.GITHUB_TOKEN ||
+  !process.env.TWITTER_BEARER_TOKEN ||
+  !process.env.GOOGLE_GEOCODING_KEY
+) {
+  throw new Error(
+    'You need to provide a token for github, a twitter bearer token and google maps key in a .env file for this app to function'
+  );
+}
+
 // Run the app inside of async function, so remote github schema can be fetched
 async function run() {
   const app = express();
@@ -84,5 +96,5 @@ async function run() {
 try {
   run();
 } catch (e) {
-  console.log(e, e.message, e.stack);
+  console.log(e.message);
 }
