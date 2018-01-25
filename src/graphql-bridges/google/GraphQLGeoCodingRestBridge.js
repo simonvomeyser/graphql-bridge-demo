@@ -1,4 +1,4 @@
-import { GraphQlRestBridge } from '../../../graphql-bridge'; // @todo change to npm package later
+import { GraphQlRestBridge } from 'graphql-bridge'; // @todo change to npm package later
 import geoCodingMapper from './geoCodingMapper';
 require('dotenv').config();
 

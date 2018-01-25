@@ -1,4 +1,4 @@
-import { GraphQlRestBridge } from '../../../graphql-bridge'; // @todo change to npm package later
+import { GraphQlRestBridge } from 'graphql-bridge';
 require('dotenv').config();
 
 export default class GraphQLTwitterRestBridge extends GraphQlRestBridge {

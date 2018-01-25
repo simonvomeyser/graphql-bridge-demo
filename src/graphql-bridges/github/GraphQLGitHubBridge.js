@@ -1,4 +1,4 @@
-import { GraphQlBridge } from '../../../graphql-bridge'; // @todo change to npm package later
+import { GraphQlBridge } from 'graphql-bridge'; // @todo change to npm package later
 
 require('dotenv').config();
 export default class GraphQLGitHubBridge extends GraphQlBridge {
