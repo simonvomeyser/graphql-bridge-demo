@@ -8,8 +8,12 @@ import {
 
 import TwitterUserType from './twitter/TwitterUserType';
 import GitHubUserType from './github/GitHubUserType';
+
 import GraphQLTwitterRestBridge from '../graphql-bridges/twitter/GraphQLTwitterRestBridge';
+import GraphQLGitHubBridge from '../graphql-bridges/github/GraphQLGitHubBridge';
+
 const TwitterIntegration = new GraphQLTwitterRestBridge();
+const GitHubIntegration = new GraphQLGitHubBridge();
 
 
 const UserType = new GraphQLObjectType({
@@ -24,13 +28,12 @@ const UserType = new GraphQLObjectType({
         return TwitterIntegration.getUser(parentValue.name);
       },
     },
-    // GitHubUser: {
-    //   type: GitHubUserType,
-    //   resolve(parentValue, args, request) {
-    //     return TwitterIntegration.getUser(parentValue.name);
-    //   },
-    // }
-    // gitHubUser: GitHubUserType,
+    GitHubUser: {
+      type: GitHubUserType,
+      resolve(parentValue, args, request) {
+        return GitHubIntegration.getUser(parentValue.name);
+      },
+    }
   },
 });
 

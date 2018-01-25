@@ -5,9 +5,12 @@ import GraphQLGeoCodingRestBridge from '../../graphql-bridges/google/GraphQLGeoC
 
 import TwitterTweetType from './TwitterTweetType';
 import GoogleGeoCodeType from '../google/GoogleGeoCodeType';
+import GitHubUserType from '../github/GitHubUserType';
+import GraphQLGitHubBridge from '../../graphql-bridges/github/GraphQLGitHubBridge';
 
 const GoogleGeoCodeIntegration = new GraphQLGeoCodingRestBridge();
 const TwitterIntegration = new GraphQLTwitterRestBridge();
+const GitHubIntegration = new GraphQLGitHubBridge();
 
 const TwitterUserType = new GraphQLObjectType ({
   name: 'TwitterUser',
@@ -15,6 +18,12 @@ const TwitterUserType = new GraphQLObjectType ({
   fields: () => ({
     name: {
       type: GraphQLString,
+    },
+    screen_name: {
+      type: GraphQLString,
+    },
+    location: {
+      type: GraphQLString
     },
     tweets: {
       type: new GraphQLList(TwitterTweetType),
@@ -36,6 +45,12 @@ const TwitterUserType = new GraphQLObjectType ({
         return GoogleGeoCodeIntegration.reverseGeocode(parentValue.location);
       },
     },
+    gitHubUser: {
+      type: GitHubUserType,
+      resolve(parentValue) {
+        return GitHubIntegration.getUser(parentValue.screen_name);
+      },
+    }
   }),
 
 });
