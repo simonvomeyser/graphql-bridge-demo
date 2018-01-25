@@ -1,3 +1,4 @@
+
 import {
   GraphQLString,
   GraphQLSchema,
@@ -7,6 +8,9 @@ import {
 
 import TwitterUserType from './twitter/TwitterUserType';
 import GitHubUserType from './github/GitHubUserType';
+import GraphQLTwitterRestBridge from '../graphql-bridges/twitter/GraphQLTwitterRestBridge';
+const TwitterIntegration = new GraphQLTwitterRestBridge();
+
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -14,8 +18,19 @@ const UserType = new GraphQLObjectType({
     name: {
       type: GraphQLString,
     },
-    twitterUser: TwitterUserType,
-    gitHubUser: GitHubUserType,
+    twitterUser: {
+      type: TwitterUserType,
+      resolve(parentValue, args, request) {
+        return TwitterIntegration.getUser(parentValue.name);
+      },
+    },
+    // GitHubUser: {
+    //   type: GitHubUserType,
+    //   resolve(parentValue, args, request) {
+    //     return TwitterIntegration.getUser(parentValue.name);
+    //   },
+    // }
+    // gitHubUser: GitHubUserType,
   },
 });
 

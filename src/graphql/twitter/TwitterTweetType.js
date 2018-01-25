@@ -1,9 +1,10 @@
-import twitterTweetResourceSnapshot from './twitterTweetResourceSnapshot';
-import composeWithJson from 'graphql-compose-json';
+import { GraphQLFloat, GraphQLString, GraphQLObjectType } from 'graphql';
 
-const TwitterUserTC = composeWithJson(
-  'TwitterTweet',
-  twitterTweetResourceSnapshot
-);
-
-export default TwitterUserTC.getType();
+export default new GraphQLObjectType({
+  name: 'TwitterTweet',
+  fields: () => ({
+    text: {
+      type: GraphQLString,
+    },
+  }),
+});
