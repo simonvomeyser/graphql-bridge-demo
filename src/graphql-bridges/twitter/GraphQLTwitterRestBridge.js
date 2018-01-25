@@ -1,8 +1,15 @@
 import { GraphQlRestBridge } from 'graphql-bridge';
 require('dotenv').config();
 
+/**
+ * Intigrate Twitter REST API
+ *
+ * Functions should be self explanatory
+ */
 export default class GraphQLTwitterRestBridge extends GraphQlRestBridge {
   constructor() {
+    // No default data for each request
+    // But always send Bearer Token in Headers
     super({}, { Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}` });
   }
   async getUser(name) {

@@ -1,3 +1,6 @@
+/**
+ * Simply map data from endpoint to GoogleGeoCodeType
+ */
 export default data => {
   data.addressName = data.formatted_address;
   data.lat = data.geometry.location.lat;
