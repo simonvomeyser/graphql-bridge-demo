@@ -4,7 +4,9 @@ This repositiory is a demo for the usage of npm-package *graphql-bridge*  (https
 
 It features the illustrated types and connections:
 
+<p align="center">
 ![The structure of the app](structure.png)
+</p>
 
 The root query provides the possibility to enter any name and find the corresponding GitHub or Twitter account.
 
@@ -23,8 +25,11 @@ If you still want to host your own version, create a `.env` file with the tokens
 You can obtain your tokens here:
 
 Twitter:  https://gist.github.com/elmariachi111/6168585
+
 GitHub: https://github.com/settings/tokens/new
+
 GoogleMaps: https://developers.google.com/maps/documentation/javascript/get-api-key
+
 
 ## Experimental Branch
 
