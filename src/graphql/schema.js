@@ -16,6 +16,22 @@ const TwitterIntegration = new GraphQLTwitterRestBridge();
 const GitHubIntegration = new GraphQLGitHubBridge();
 
 
+/**
+ * This is the starting point of the app
+ *
+ * The User contains a twitterUser and a GitHub User which
+ *
+ * The Twitter User
+ *  - Has many tweets
+ *  - Has one geo code location with google maps
+ *  - Has a connection to a GitHub User
+ *
+ * The GitHub User
+ *  - Has a connection the the Twitter User
+ *
+ * See the GraphQLTwitterRestBridge, GraphQLGitHubBridge and GraphQLGeoCodingBridge
+ * to see the lib 'graphql-bridge' in action
+ */
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: {
@@ -25,6 +41,7 @@ const UserType = new GraphQLObjectType({
     twitterUser: {
       type: TwitterUserType,
       resolve(parentValue, args, request) {
+        // This integration returns a user and maps it to the type
         return TwitterIntegration.getUser(parentValue.name);
       },
     },
