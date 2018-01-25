@@ -4,9 +4,9 @@ This repositiory is a demo for the usage of npm-package *graphql-bridge*  (https
 
 It features the illustrated types and connections:
 
-<p align="center">
-![The structure of the app](structure.png)
-</p>
+
+    ![The structure of the app](structure.png)
+
 
 The root query provides the possibility to enter any name and find the corresponding GitHub or Twitter account.
 
